@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.0
+      author: GelvidesAleksey
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: classpath:db/changelog/sqlFiles/create-table-currency.sql
