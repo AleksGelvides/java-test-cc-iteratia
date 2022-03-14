@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: classpath:db/changelog/changeset/currency.yaml
+  - include:
+      file: classpath:db/changelog/changeset/history-conversation.yaml
