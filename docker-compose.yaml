@@ -1,0 +1,26 @@
+version: '3'
+services:
+
+  postgres-dev:
+    image: 'postgres:12'
+    container_name: 'postgres-dev'
+    volumes:
+      - ./postgres_dev:/var/lib/postgres/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 5433:5432
+
+  postgres-stage:
+    image: 'postgres:12'
+    container_name: 'postgres-stage'
+    volumes:
+      - ./postgres_dev:/var/lib/postgres/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 5434:5432
