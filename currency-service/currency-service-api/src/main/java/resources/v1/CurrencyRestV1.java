@@ -11,13 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 public interface CurrencyRestV1 {
 
     @GetMapping("exchange/{base}/{target}/{quantity}")
-    ResponseEntity<?> getExchangeCourse(@PathVariable String base,
+    ResponseEntity<?> conversation(@PathVariable String base,
                                         @PathVariable String target,
                                         @PathVariable double quantity);
 
-    @GetMapping("history")
-    ResponseEntity<?> getHistory();
-
-    @GetMapping("statistic")
-    ResponseEntity<?> getStatistic();
+    @GetMapping("start")
+    ResponseEntity<?> getContent();
 }
