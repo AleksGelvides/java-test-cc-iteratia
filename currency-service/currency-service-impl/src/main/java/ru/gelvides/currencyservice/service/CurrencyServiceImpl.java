@@ -15,11 +15,16 @@ import ru.gelvides.currencyservice.repositories.CurrencyRepository;
 import ru.gelvides.currencyservice.repositories.HistoryRepositories;
 import ru.gelvides.currencyservice.domain.Currency;
 import ru.gelvides.currencyservice.domain.HistoryConversation;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -40,14 +45,14 @@ public class CurrencyServiceImpl implements CurrencyServiceApi {
 
     @Override
     public ConversationResultDto conversation(String base, String target, double count) {
-        if(currencyRepository.dateSearch(LocalDate.now()) == null)
+        if (currencyRepository.dateSearch(LocalDate.now()) == null)
             init();
         var baseCurrency = currencyRepository.getByCharcodeAndDate(base, LocalDate.now());
         var targetCurrency = currencyRepository.getByCharcodeAndDate(target, LocalDate.now());
         var crossCourse = baseCurrency.getValue() / targetCurrency.getValue();
         HistoryConversation historyConversation =
                 HistoryMapper.INSTANCE.createHistoryConversation
-                        (baseCurrency, targetCurrency, LocalDate.now(), crossCourse);
+                        (baseCurrency, targetCurrency, LocalDate.now().minusDays(10), crossCourse);
         historyRepository.save(historyConversation);
         return new ConversationResultDto(count * crossCourse);
     }
@@ -62,10 +67,20 @@ public class CurrencyServiceImpl implements CurrencyServiceApi {
 
     @Override
     public List<StatisticConversation> getStatistic() {
-        List<HistoryConversation> histories =
-                historyRepository.findByDateConversationAfter(LocalDate.now().minusDays(7));
-
-        return null;
+        List<StatisticConversation> statistic = new ArrayList<>();
+        Map<String, List<HistoryConversation>> histories =
+                historyRepository.findByDateConversationAfter(LocalDate.now().minusDays(7))
+                        .stream()
+                        .collect(Collectors
+                                .groupingBy(historyConversation -> historyConversation.getBaseCurrency().getCharcode()));
+        for (Map.Entry<String, List<HistoryConversation>> value : histories.entrySet()) {
+            statistic.add(new StatisticConversation()
+                    .setBase(value.getKey())
+                    .setTarget(value.getValue().get(0).getTargetCurrency().getCharcode())
+                    .setCountConversation(value.getValue().size())
+                    .setAverageCourse(value.getValue().stream().mapToDouble(HistoryConversation::getCourse).average().getAsDouble()));
+        }
+        return statistic.stream().sorted().toList();
     }
 
     private void init() {
