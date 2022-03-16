@@ -2,7 +2,6 @@ package ru.gelvides.currencyservice.mappers;
 
 import dto.HistoryConversationDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import ru.gelvides.currencyservice.domain.Currency;
 import ru.gelvides.currencyservice.domain.HistoryConversation;
