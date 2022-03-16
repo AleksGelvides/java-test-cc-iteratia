@@ -9,5 +9,14 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
 server:
   port: 8081
+
+request:
+  cbrf:
+    domain: http://www.cbr.ru/scripts/
+    all-currency: XML_daily.asp
