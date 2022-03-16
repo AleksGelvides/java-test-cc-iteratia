@@ -18,7 +18,12 @@ public class CurrencyRestV1Implementation implements CurrencyRestV1 {
 
     @Override
     public ResponseEntity<?> conversation(String base, String target, double quantity) {
-        return null;
+        try{
+            var result = service.conversation(base, target, quantity);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
