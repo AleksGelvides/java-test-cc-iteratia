@@ -21,7 +21,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,7 +51,7 @@ public class CurrencyServiceImpl implements CurrencyServiceApi {
         var crossCourse = baseCurrency.getValue() / targetCurrency.getValue();
         HistoryConversation historyConversation =
                 HistoryMapper.INSTANCE.createHistoryConversation
-                        (baseCurrency, targetCurrency, LocalDate.now().minusDays(10), crossCourse);
+                        (baseCurrency, targetCurrency, LocalDate.now(), crossCourse);
         historyRepository.save(historyConversation);
         return new ConversationResultDto(count * crossCourse);
     }

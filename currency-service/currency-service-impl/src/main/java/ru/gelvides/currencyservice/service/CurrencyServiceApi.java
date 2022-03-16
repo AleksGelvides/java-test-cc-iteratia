@@ -3,7 +3,6 @@ package ru.gelvides.currencyservice.service;
 import dto.ConversationResultDto;
 import dto.HistoryConversationDto;
 import dto.StatisticConversation;
-import ru.gelvides.currencyservice.domain.HistoryConversation;
 
 import java.util.List;
 
