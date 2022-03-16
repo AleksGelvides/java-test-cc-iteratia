@@ -19,5 +19,6 @@
     </properties>
 
     <modules>
+        <module>currency-service</module>
     </modules>
 </project>
