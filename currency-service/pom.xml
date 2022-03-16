@@ -14,12 +14,11 @@
     <groupId>ru.gelvides</groupId>
     <artifactId>currency-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>currency-service</name>
-    <description>currency-service-impl</description>
     <packaging>pom</packaging>
 
     <modules>
         <module>currency-service-impl</module>
+        <module>currency-service-api</module>
     </modules>
 
 
